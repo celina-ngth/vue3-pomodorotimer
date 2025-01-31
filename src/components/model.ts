@@ -5,7 +5,7 @@ export const TIMERS_LABEL: Record<string, string> = {
 }
 
 export const TIMERS: Record<string, number> = {
-  focus: 0.1 * 60,
-  break: 0.05 * 60,
-  longBreak: 0.07 * 60,
+  focus: 25 * 60,
+  break: 5 * 60,
+  longBreak: 15 * 60,
 }
