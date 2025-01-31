@@ -27,13 +27,13 @@
 				if (timer.value <= 0) {
 					isRunning.value = false
 					clearInterval(intervalId.value ?? 0)
-					changeTimer()
+					nextTimer()
 				}
 			}, 1000)
 		}
 	}
 
-	const changeTimer = () => {
+	const nextTimer = () => {
 		isRunning.value = false
 		clearInterval(intervalId.value ?? 0)
 		switch (currentTimer.value) {
@@ -47,6 +47,12 @@
 				currentTimer.value = 'focus'
 				break
 		}
+	}
+
+	const changeTimer = (timerType: string) => {
+		isRunning.value = false
+		clearInterval(intervalId.value ?? 0)
+		currentTimer.value = timerType
 	}
 
 	watch(currentTimer, () => {
@@ -65,7 +71,7 @@
 				v-for="(label, timerType) in TIMERS_LABEL"
 				:key="timerType"
 				type="button"
-				@click="currentTimer = timerType"
+				@click="changeTimer(timerType)"
 			>
 				{{ label }}
 			</button>
@@ -79,7 +85,7 @@
 			<button type="button" @click="startPauseTimer()">
 				{{ isRunning ? 'Pause' : 'Start' }}
 			</button>
-			<button type="button" @click="changeTimer()">Next</button>
+			<button type="button" @click="nextTimer()">Next</button>
 		</div>
 	</div>
 </template>
