@@ -33,21 +33,25 @@
 					clearInterval(intervalId.value ?? 0)
 					isRunning.value = false
 
-					switch (currentTimer.value) {
-						case 'focus':
-							currentTimer.value = 'break'
-							break
-						case 'break':
-							currentTimer.value = 'focus'
-							break
-						case 'longBreak':
-							currentTimer.value = 'focus'
-							break
-					}
+					changeTimer()
 
 					timer.value = TIMERS[currentTimer.value]
 				}
 			}, 1000)
+		}
+	}
+
+	const changeTimer = () => {
+		switch (currentTimer.value) {
+			case 'focus':
+				currentTimer.value = 'break'
+				break
+			case 'break':
+				currentTimer.value = 'focus'
+				break
+			case 'longBreak':
+				currentTimer.value = 'focus'
+				break
 		}
 	}
 
@@ -69,5 +73,6 @@
 		<button type="button" @click="startPauseTimer()">
 			{{ isRunning ? 'Pause' : 'Start' }}
 		</button>
+		<button type="button" @click="changeTimer()">Next</button>
 	</div>
 </template>
