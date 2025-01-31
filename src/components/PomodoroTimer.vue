@@ -34,6 +34,8 @@
 	}
 
 	const changeTimer = () => {
+		isRunning.value = false
+		clearInterval(intervalId.value ?? 0)
 		switch (currentTimer.value) {
 			case 'focus':
 				currentTimer.value = 'break'
@@ -57,23 +59,55 @@
 </script>
 
 <template>
-	<button
-		v-for="(label, timerType) in TIMERS_LABEL"
-		:key="timerType"
-		type="button"
-		@click="currentTimer = timerType"
-	>
-		{{ label }}
-	</button>
+	<div :class="currentTimer" class="container">
+		<div>
+			<button
+				v-for="(label, timerType) in TIMERS_LABEL"
+				:key="timerType"
+				type="button"
+				@click="currentTimer = timerType"
+			>
+				{{ label }}
+			</button>
+		</div>
 
-	<h1>{{ TIMERS_LABEL[currentTimer] }}</h1>
+		<h1>{{ TIMERS_LABEL[currentTimer] }}</h1>
 
-	<div class="card">
-		<p>{{ formattedTime }}</p>
+		<div>
+			<p class="timer">{{ formattedTime }}</p>
 
-		<button type="button" @click="startPauseTimer()">
-			{{ isRunning ? 'Pause' : 'Start' }}
-		</button>
-		<button type="button" @click="changeTimer()">Next</button>
+			<button type="button" @click="startPauseTimer()">
+				{{ isRunning ? 'Pause' : 'Start' }}
+			</button>
+			<button type="button" @click="changeTimer()">Next</button>
+		</div>
 	</div>
 </template>
+
+<style lang="css">
+	.container {
+		height: 100vh;
+		width: 100vw;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		transition: background-color 0.5s ease-out;
+	}
+	.timer {
+		font-size: 5rem;
+		margin: 0 0.5rem;
+	}
+	.focus {
+		color: #9887b3 !important;
+		background-color: #dbcdf0 !important;
+	}
+	.break {
+		color: #b89983 !important;
+		background-color: #f7d9c4 !important;
+	}
+	.longBreak {
+		color: #6e8191 !important;
+		background-color: #c6def1 !important;
+	}
+</style>
