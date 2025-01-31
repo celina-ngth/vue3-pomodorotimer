@@ -1,17 +1,6 @@
 <script setup lang="ts">
 	import { computed, reactive, ref, watch } from 'vue'
-
-	const TIMERS_LABEL: Record<string, string> = {
-		focus: 'Focus',
-		break: 'Break',
-		longBreak: 'Long break',
-	}
-
-	const TIMERS: Record<string, number> = {
-		focus: 0.1 * 60,
-		break: 0.05 * 60,
-		longBreak: 0.07 * 60,
-	}
+	import { TIMERS, TIMERS_LABEL } from './model'
 
 	const isRunning = ref<boolean>(false)
 	const currentTimer = ref<string>('focus')
@@ -64,17 +53,16 @@
 </script>
 
 <template>
-	<h1>{{ TIMERS_LABEL[currentTimer] }}</h1>
+	<button
+		v-for="(label, timerType) in TIMERS_LABEL"
+		:key="timerType"
+		type="button"
+		@click="currentTimer = timerType"
+	>
+		{{ label }}
+	</button>
 
-	<button type="button" @click="currentTimer = 'focus'">
-		{{ TIMERS_LABEL['focus'] }}
-	</button>
-	<button type="button" @click="currentTimer = 'break'">
-		{{ TIMERS_LABEL['break'] }}
-	</button>
-	<button type="button" @click="currentTimer = 'longBreak'">
-		{{ TIMERS_LABEL['longBreak'] }}
-	</button>
+	<h1>{{ TIMERS_LABEL[currentTimer] }}</h1>
 
 	<div class="card">
 		<p>{{ formattedTime }}</p>
