@@ -50,6 +50,10 @@
 	watch(currentTimer, () => {
 		timer.value = TIMERS[currentTimer.value]
 	})
+
+	watch(formattedTime, () => {
+		document.title = `✨ ${formattedTime.value} | Pomodoro timer by Célina Ngeth`
+	})
 </script>
 
 <template>
